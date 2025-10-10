@@ -6,7 +6,7 @@ import java.util.Scanner; //to print out last part
 public class Ballot {
     //attributes
     //candidate array
-    private static final String[] CANDIDATES = {"A", "B", "C", "D"};
+    private static final String[] cands = {"A", "B", "C", "D"};
     //votes array
     private String[] votes;
 
@@ -29,8 +29,6 @@ public class Ballot {
     public void castVote() {
         //use the scanner thing
         Scanner scanner = new Scanner(System.in);
-        //make a new votes array
-        votes = new String[4];
         //counter for array
         int count = 0;
         //get voters votes for the 4
@@ -40,7 +38,7 @@ public class Ballot {
 
             //check if is an actual candidate
             boolean isValid = false;
-            for (String c : CANDIDATES) {
+            for (String c : cands) {
                 if (c.equals(input)) {
                     isValid = true;
                     break;
@@ -80,12 +78,12 @@ public class Ballot {
 
     //get the list of candidates
     public static String[] getCandidateList() {
-        return CANDIDATES;
+        return cands;
     }
 
-    //to string (print out)
+    //to string (print out) use arrays to string to get rid of brackets (not used)
     public String toString() {
-        return "Votes: " + Arrays.toString(votes);
+        return Arrays.toString(votes);
     }
 
 }

@@ -26,14 +26,14 @@ public class Tally {
 
     //countNext() counts the next round of votes
     public void countNext() {
-        Arrays.fill(counter, 0); //reset counter using the fill (makes all parts 0)
+        Arrays.fill(counter, 0); // Reset counter using the fill (makes all parts 0)
 
-        //tally highest ranked vote for each ballot
-        for (Ballot b: ballots) {
+        // Tally highest ranked vote for each ballot
+        for (Ballot b : ballots) {
             String[] votes = b.getVoteList();
-            //go through votes
+            // Go through votes
             for (String v : votes) {
-                // find the index of the candidate w/ rank
+                // Find the index of the candidate with rank
                 int idx = -1;
                 for (int i = 0; i < cands.length; i++) {
                     if (cands[i].equals(v)) {
@@ -41,39 +41,32 @@ public class Tally {
                         break;
                     }
                 }
-                //only count highest ranked valid vote (if idx is invalid and not found or not eliminated yt)
+                // Only count highest ranked valid vote (if idx is valid and not eliminated yet)
                 if (idx != -1 && !(eliminated[idx])) {
                     counter[idx]++;
                     break;
                 }
             }
         }
-        //round done
+
         roundCount++;
 
-        //if no majority, eliminate lowest
+        // If no majority, eliminate the lowest
         if (!isMajority()) {
-            //not yet set
-            int minVotes = -1;
+            // Initialize minVotes to a value that is larger than any possible count
+            int minVotes = counter.length + 1;
             int minIndex = -1;
 
-            //find first val to initialize (that is valid - sorry if this doesnt make sense)
+            // Find the first valid candidate (that is not eliminated)
             for (int i = 0; i < counter.length; i++) {
-                //only if valid
-                if (!eliminated[i]) {
+                if (!eliminated[i] && counter[i] < minVotes) {
                     minVotes = counter[i];
                     minIndex = i;
-                    break;
                 }
             }
 
-            //comparing with the rest of the counter values
-            for (int i = 0; i < counter.length; i++) {
-                if (!eliminated[i] && (counter[i] < minVotes)) {
-                    minVotes = counter[i];
-                    minIndex = i;
-                }
-            }
+            // Eliminate the candidate with the fewest votes
+            eliminated[minIndex] = true;
         }
     }
 
@@ -102,6 +95,7 @@ public class Tally {
         int maxVotes = 0;
         int winnerIndex = -1;
 
+        //find the total votes and max votes
         for (int i = 0; i < counter.length; i++) {
             if (!eliminated[i]) {
                 totalVotes += counter[i];
@@ -112,16 +106,19 @@ public class Tally {
             }
         }
 
-        //if not set yet
+        //if no votes counted yet
         if (maxVotes == 0) {
             return "Votes have not been counted yet.";
         }
 
+        //get the winner candidate
         String winner = cands[winnerIndex];
-        double percent = 100.0 * maxVotes / totalVotes;
+        int percentage = (int) ((100.0 * maxVotes) / totalVotes); //cast to int for whole number percentage so it doesnt print the decimal points
 
-        return "Winner: " + winner +
-               "\nRounds: " + roundCount +
-               "\nPercent: " + percent;
+        //return the result /n to put in a new line
+        return "Winner: " + winner + 
+            "\nRounds: " + roundCount + 
+            "\nPercent: " + percentage + "%";
     }
+
 }
