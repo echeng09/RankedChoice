@@ -13,7 +13,7 @@ public class BallotTester {
         Ballot b4 = new Ballot("D", "C", "A", "B");
 
         //fifth ballot is no arg constructor
-        System.out.println("Please cast your vote for Ballot #5:");
+        System.out.println("Please cast your vote for Ballot 5:");
         Ballot b5 = new Ballot();
         b5.castVote();
 

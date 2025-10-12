@@ -1,10 +1,10 @@
 package RankedChoice;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Arrays;
 
 public class Tally {
-    //attributes
+    //attributes (wasnt sure how to do less than 5)
     //candidates
     private static final String[] cands = {"A", "B", "C", "D"};
     //list of ballots
@@ -26,14 +26,14 @@ public class Tally {
 
     //countNext() counts the next round of votes
     public void countNext() {
-        Arrays.fill(counter, 0); // Reset counter using the fill (makes all parts 0)
+        Arrays.fill(counter, 0); //reset counter using the fill (makes all parts 0)
 
-        // Tally highest ranked vote for each ballot
+        //tally highest ranked vote for each ballot
         for (Ballot b : ballots) {
             String[] votes = b.getVoteList();
             // Go through votes
             for (String v : votes) {
-                // Find the index of the candidate with rank
+                //find the idx of the candidate w/ rank
                 int idx = -1;
                 for (int i = 0; i < cands.length; i++) {
                     if (cands[i].equals(v)) {
@@ -41,7 +41,7 @@ public class Tally {
                         break;
                     }
                 }
-                // Only count highest ranked valid vote (if idx is valid and not eliminated yet)
+                //only count highest ranked valid vote (if idx is valid and not eliminated yet)
                 if (idx != -1 && !(eliminated[idx])) {
                     counter[idx]++;
                     break;
@@ -51,13 +51,13 @@ public class Tally {
 
         roundCount++;
 
-        // If no majority, eliminate the lowest
+        //if no majority, eliminate the lowest
         if (!isMajority()) {
-            // Initialize minVotes to a value that is larger than any possible count
+            //initialize minVotes to a idx (not apat of counter)
             int minVotes = counter.length + 1;
             int minIndex = -1;
 
-            // Find the first valid candidate (that is not eliminated)
+            //find the first valid candidate (that is not eliminated)
             for (int i = 0; i < counter.length; i++) {
                 if (!eliminated[i] && counter[i] < minVotes) {
                     minVotes = counter[i];
@@ -65,7 +65,7 @@ public class Tally {
                 }
             }
 
-            // Eliminate the candidate with the fewest votes
+            //eliminate the candidate with the fewest votes
             eliminated[minIndex] = true;
         }
     }

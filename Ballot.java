@@ -11,12 +11,12 @@ public class Ballot {
     private String[] votes;
 
     //constructors
-    //no input
+    //no input constructor
     public Ballot() {
         votes = new String[4];
     }
 
-    //with strings that get added to the votes array
+    //constructor with strings that get added to the votes array
     public Ballot(String v1, String v2, String v3, String v4) {
         votes = new String[4];
         votes[0] = v1;
@@ -25,7 +25,7 @@ public class Ballot {
         votes[3] = v4;
     }
 
-    //cast vote: 
+    //castVote()
     public void castVote() {
         //use the scanner thing
         Scanner scanner = new Scanner(System.in);
@@ -52,14 +52,12 @@ public class Ballot {
 
             //check if multiple times
             boolean alreadyChosen = false;
-            for (String v : votes) {
+            for (String v: votes) {
                 if (input.equals(v)) {
                     alreadyChosen = true;
                     break;
                 }
             }
-
-
 
             //if chosen already, give message and redo, ortherwise, increment counter and add to votes array
             if (alreadyChosen) {
